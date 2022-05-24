@@ -214,3 +214,22 @@ GROUP BY totaldata.cat_id,totaldata.pro_id,totaldata.pro_name;
 
 
 
+    
+SELECT 
+    product.pro_id as Id, product.pro_name as Product_Name
+FROM
+    product
+        INNER JOIN
+    (SELECT 
+        supplier_pricing.pro_id
+    FROM
+        supplier_pricing
+    INNER JOIN (SELECT 
+        e_com.order.pricing_id
+    FROM
+        e_com.order
+    WHERE
+        e_com.order.ord_date > '2021-10-05') AS record ON supplier_pricing.pricing_id = record.pricing_id) AS result ON product.pro_id = result.pro_id; 
+
+
+

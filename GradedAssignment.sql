@@ -171,3 +171,22 @@ FROM
     INNER JOIN supplier_pricing ON e_com.order.pricing_id = supplier_pricing.pricing_id
     WHERE
         e_com.order.cus_id = 2) AS result ON result.pro_id = product.pro_id;
+        
+        
+SELECT 
+    supplier.*
+FROM
+    supplier
+        INNER JOIN
+    (SELECT 
+        COUNT(pro_id) AS no_of_prod, supp_id
+    FROM
+        supplier_pricing
+    GROUP BY supp_id) AS dis_prod_id ON supplier.supp_id = dis_prod_id.supp_id
+WHERE
+    dis_prod_id.no_of_prod > 1;
+    
+select product.pro_id from product inner join (select distinct(cat_id) from produc t group by cat_id);
+
+
+select product.pro_id, product.cat_id from product;

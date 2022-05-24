@@ -188,5 +188,29 @@ WHERE
     
 select product.pro_id from product inner join (select distinct(cat_id) from produc t group by cat_id);
 
+SELECT 
+    category.cat_id,
+    MIN(totaldata.price) AS Least_Price,
+    totaldata.cat_id,
+    totaldata.pro_id,
+    totaldata.pro_name
+FROM
+    category
+        INNER JOIN
+    (SELECT 
+        product.pro_id,
+            product.pro_name,
+            product.cat_id,
+            min_price.price AS price
+    FROM
+        product
+    INNER JOIN (SELECT 
+        supplier_pricing.pro_id,
+            MIN(supplier_pricing.supp_price) AS price
+    FROM
+        supplier_pricing
+    GROUP BY pro_id) AS min_price ON product.pro_id = min_price.pro_id) AS totaldata ON totaldata.cat_id = category.cat_id
+GROUP BY totaldata.cat_id,totaldata.pro_id,totaldata.pro_name;
 
-select product.pro_id, product.cat_id from product;
+
+

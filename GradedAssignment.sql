@@ -232,4 +232,12 @@ FROM
         e_com.order.ord_date > '2021-10-05') AS record ON supplier_pricing.pricing_id = record.pricing_id) AS result ON product.pro_id = result.pro_id; 
 
 
-
+SELECT 
+    customer.cus_name AS 'Name', customer.cus_gender AS Gender
+FROM
+    customer
+WHERE
+    cus_name like '%a' OR cus_name like '%A'
+        OR cus_name like 'a%'
+        OR cus_name like 'A%'
+ORDER BY cus_name; 
